@@ -21,7 +21,7 @@ This annotation was build on top of a great project called [embedded-elasticsear
 
 ## Usage
 
-You can annotate you base integration test class with `@EmbeddedElasticsearch`
+You can annotate your base integration test class with `@EmbeddedElasticsearch`
 
 
 ```
