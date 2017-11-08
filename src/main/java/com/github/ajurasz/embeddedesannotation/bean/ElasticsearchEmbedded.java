@@ -61,14 +61,14 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        int httpPort = this.httpPort == 0 ? findAvailableTcpPort() : this.httpPort;
-        int tcpPort = this.tcpPort == 0 ? findAvailableTcpPort() : this.tcpPort;
+        int httpPortToUse = this.httpPort == 0 ? findAvailableTcpPort() : this.httpPort;
+        int tcpPortToUse = this.tcpPort == 0 ? findAvailableTcpPort() : this.tcpPort;
 
         EmbeddedElastic.Builder embeddedElasticBuilder = EmbeddedElastic.builder()
             .withElasticVersion(this.version)
             .withSetting(CLUSTER_NAME, this.clusterName)
-            .withSetting(HTTP_PORT, httpPort)
-            .withSetting(TRANSPORT_TCP_PORT, tcpPort)
+            .withSetting(HTTP_PORT, httpPortToUse)
+            .withSetting(TRANSPORT_TCP_PORT, tcpPortToUse)
             .withEsJavaOpts(this.javaOpts)
             .withStartTimeout(this.startTimeout, SECONDS);
 
@@ -82,8 +82,8 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
 
         embeddedElastic = embeddedElasticBuilder.build().start();
 
-        System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_HTTP_PORT, "" + httpPort);
-        System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_TCP_PORT, "" + tcpPort);
+        System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_HTTP_PORT, Integer.toString(httpPortToUse));
+        System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_TCP_PORT, Integer.toString(tcpPortToUse));
     }
 
     public int getHttpPort() {
