@@ -14,7 +14,7 @@
     <groupId>com.github.ajurasz</groupId>
     <artifactId>embedded-es-annotation</artifactId>
     <name>${project.artifactId}</name>
-    <version>0.0</version>
+    <version>0.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
