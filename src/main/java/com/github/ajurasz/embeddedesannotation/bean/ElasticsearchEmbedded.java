@@ -11,7 +11,7 @@ import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.CLUSTER_NA
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.HTTP_PORT;
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.TRANSPORT_TCP_PORT;
 
-public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
+public class ElasticsearchEmbedded implements InitializingBean {
 
     public static final String BEAN_NAME = "elasticsearchEmbedded";
 
@@ -52,11 +52,6 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
         this.plugins = plugins;
         this.startTimeout = startTimeout;
         this.javaOpts = javaOpts;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-        embeddedElastic.stop();
     }
 
     @Override
