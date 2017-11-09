@@ -12,7 +12,7 @@
     <groupId>com.github.ajurasz</groupId>
     <artifactId>embedded-es-annotation</artifactId>
     <name>${project.artifactId}</name>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -183,7 +183,7 @@
         <connection>scm:git:git@github.com:ajurasz/embedded-es-annotation.git</connection>
         <developerConnection>scm:git:git@github.com:ajurasz/embedded-es-annotation.git</developerConnection>
         <url>git@github.com:ajurasz/embedded-es-annotation.git</url>
-        <tag>HEAD</tag>
+        <tag>embedded-es-annotation-0.1</tag>
     </scm>
 
     <developers>
