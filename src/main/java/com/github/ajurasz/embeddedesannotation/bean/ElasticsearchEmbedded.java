@@ -1,5 +1,8 @@
 package com.github.ajurasz.embeddedesannotation.bean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
 import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic;
@@ -13,7 +16,9 @@ import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.CLUSTER_NA
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.HTTP_PORT;
 import static pl.allegro.tech.embeddedelasticsearch.PopularProperties.TRANSPORT_TCP_PORT;
 
-public class ElasticsearchEmbedded implements InitializingBean {
+public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(ElasticsearchEmbedded.class);
 
     public static final String BEAN_NAME = "elasticsearchEmbedded";
 
@@ -54,6 +59,15 @@ public class ElasticsearchEmbedded implements InitializingBean {
         this.plugins = plugins;
         this.startTimeout = startTimeout;
         this.javaOpts = javaOpts;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        try {
+            embeddedElastic.stop();
+        } catch (Exception ex) {
+            logger.warn("failed to stop elasticsearch cleanly {}", ex.getMessage());
+        }
     }
 
     @Override

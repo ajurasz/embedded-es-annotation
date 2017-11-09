@@ -38,5 +38,7 @@ public class EmbeddedElasticsearchContextCustomizer implements ContextCustomizer
 
         beanFactory.initializeBean(elasticsearchEmbedded, ElasticsearchEmbedded.BEAN_NAME);
         beanFactory.registerSingleton(ElasticsearchEmbedded.BEAN_NAME, elasticsearchEmbedded);
+        ((DefaultSingletonBeanRegistry) beanFactory)
+            .registerDisposableBean(ElasticsearchEmbedded.BEAN_NAME, elasticsearchEmbedded);
     }
 }
