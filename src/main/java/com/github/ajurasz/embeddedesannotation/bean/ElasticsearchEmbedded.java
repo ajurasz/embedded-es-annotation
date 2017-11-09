@@ -1,9 +1,11 @@
 package com.github.ajurasz.embeddedesannotation.bean;
 
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
 import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic;
+
+import java.net.UnknownHostException;
+import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.util.SocketUtils.findAvailableTcpPort;
@@ -103,5 +105,13 @@ public class ElasticsearchEmbedded implements InitializingBean {
 
     public void deleteIndex(String indexName) {
         embeddedElastic.deleteIndex(indexName);
+    }
+
+    public List<String> fetchAllDocuments(String... indexNames) throws UnknownHostException {
+        return embeddedElastic.fetchAllDocuments(indexNames);
+    }
+
+    public void index(String indexName, String indexType, String... json) {
+        embeddedElastic.index(indexName, indexType, json);
     }
 }
