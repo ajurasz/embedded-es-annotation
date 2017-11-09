@@ -1,6 +1,7 @@
 # Embedded ES annotation
 
 [![Build](https://api.travis-ci.org/ajurasz/embedded-es-annotation.svg)](https://travis-ci.org/ajurasz/embedded-es-annotation)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ajurasz/embedded-es-annotation/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.github.ajurasz/embedded-es-annotation)
 
 **Embedded ES annotation** provides annotation that simplify running embedded `Elasticsearch` (ES) instance in `Spring`s test context. Furthermore embedded
 ES instance is part of a `Spring` context lifecycle so it can speed up tests execution as only one instance is started across all tests.
@@ -14,7 +15,7 @@ This annotation was build on top of a great project called [embedded-elasticsear
   <dependency>
     <groupId>com.github.ajurasz</groupId>
     <artifactId>embedded-es-annotation</artifactId>
-    <version>0.0</version>
+    <version>0.1</version>
   </dependency>
 <dependencies>
 ```
