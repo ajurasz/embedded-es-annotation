@@ -3,10 +3,10 @@
 [![Build](https://api.travis-ci.org/ajurasz/embedded-es-annotation.svg)](https://travis-ci.org/ajurasz/embedded-es-annotation)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ajurasz/embedded-es-annotation/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.github.ajurasz/embedded-es-annotation)
 
-**Embedded ES annotation** provides annotation that simplify running embedded `Elasticsearch` (ES) instance in `Spring`s test context. Furthermore embedded
-ES instance is part of a `Spring` context lifecycle so it can speed up tests execution as only one instance is started across all tests.
+**Embedded ES annotation** provides annotation that simplify running embedded `Elasticsearch` (ES) instance in `Spring`s test context by making ES instance part of Spring context lifecycle.
 
-This annotation was build on top of a great project called [embedded-elasticsearch](https://github.com/allegro/embedded-elasticsearch) by [Allegro Tech](https://github.com/allegro)
+This annotation was build on top of a great project called [embedded-elasticsearch](https://github.com/allegro/embedded-elasticsearch) by [Allegro Tech](https://github.com/allegro). Because this annotation
+do not expose all configuration possibilities if you need more control over created ES instance then please use [embedded-elasticsearch](https://github.com/allegro/embedded-elasticsearch) instead.
 
 ## Maven setup
 
@@ -15,10 +15,34 @@ This annotation was build on top of a great project called [embedded-elasticsear
   <dependency>
     <groupId>com.github.ajurasz</groupId>
     <artifactId>embedded-es-annotation</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
+    <scope>test</test>
   </dependency>
-<dependencies>
+</dependencies>
 ```
+
+or is case you need latest code use `jitpack`
+
+```
+<project>
+    <dependencies>
+		<dependency>
+			<groupId>com.github.ajurasz</groupId>
+			<artifactId>embedded-es-annotation</artifactId>
+			<version>746f8f12a01ae5e35b91a498fe9dafe241a5d213</version>
+			<scope>test</scope>
+		</dependency>
+    </dependencies>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+</project>
+```
+
 
 ## Usage
 
