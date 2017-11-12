@@ -3,19 +3,16 @@ package com.github.ajurasz.embeddedesannotation;
 import com.github.ajurasz.embeddedesannotation.annotation.EmbeddedElasticsearch;
 import com.github.ajurasz.embeddedesannotation.bean.ElasticsearchEmbedded;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 
 import static com.github.ajurasz.embeddedesannotation.bean.ElasticsearchEmbedded.SPRING_EMBEDDED_ELASTICSEARCH_HTTP_PORT;
 import static com.github.ajurasz.embeddedesannotation.bean.ElasticsearchEmbedded.SPRING_EMBEDDED_ELASTICSEARCH_TCP_PORT;
@@ -59,13 +56,26 @@ public class EmbeddedElasticsearchTest {
 
     @Test
     public void should_list_all_indices() throws IOException {
-        HttpClient client = HttpClients.createDefault();
-        HttpGet getRequest = new HttpGet(
-                "http://localhost:" + elasticsearchEmbedded.getHttpPort() + "/_cat/indices?v");
-        HttpResponse response = client.execute(getRequest);
-        String text = new BufferedReader(new InputStreamReader(response.getEntity().getContent()))
-            .lines().collect(Collectors.joining("\n"));
+        Response response = Request
+            .Get("http://localhost:" + elasticsearchEmbedded.getHttpPort() + "/_cat/indices?v")
+            .execute();
 
-        assertThat(text).contains("foo", "bar");
+        assertThat(response.returnContent().asString(Charset.forName("UTF-8"))).contains("foo", "bar");
+    }
+
+    @Test
+    public void should_delete_all_existing_documents() throws UnknownHostException {
+        elasticsearchEmbedded.index("foo", "foo_type", "{\"value\": \"test\"}");
+        elasticsearchEmbedded.index("foo", "foo_type_2", "{\"value\": \"test\"}");
+        elasticsearchEmbedded.index("bar", "bar_type", "{\"value\": \"test\"}");
+        elasticsearchEmbedded.index("bar", "bar_type_2", "{\"value\": \"test\"}");
+
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(4);
+
+        elasticsearchEmbedded.clearIndex("foo");
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(2);
+
+        elasticsearchEmbedded.clearIndices();
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(0);
     }
 }

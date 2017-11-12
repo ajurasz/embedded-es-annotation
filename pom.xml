@@ -21,7 +21,7 @@
 
         <assertj.version>3.8.0</assertj.version>
         <embedded-elasticsearch.version>2.1.0</embedded-elasticsearch.version>
-        <httpclient.version>4.5.3</httpclient.version>
+        <fluent-hc.version>4.5.3</fluent-hc.version>
         <jest.version>5.3.3</jest.version>
         <junit.version>4.12</junit.version>
         <logback-classic.version>1.2.3</logback-classic.version>
@@ -36,6 +36,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>${fluent-hc.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -66,12 +71,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback-classic.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

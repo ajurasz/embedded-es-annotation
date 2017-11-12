@@ -48,6 +48,8 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
 
     private EmbeddedElastic embeddedElastic;
 
+    private ElasticsearchRestClient elasticsearchRestClient;
+
     public ElasticsearchEmbedded(String version, String clusterName, int httpPort, int tcpPort,
                                  String[] indices, String[] plugins, long startTimeout,
                                  String javaOpts) {
@@ -66,7 +68,7 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
         try {
             embeddedElastic.stop();
         } catch (Exception ex) {
-            logger.warn("failed to stop elasticsearch cleanly {}", ex.getMessage());
+            logger.warn("failed to stop elasticsearch cleanly \n{}", ex.getMessage());
         }
     }
 
@@ -74,6 +76,8 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
     public void afterPropertiesSet() throws Exception {
         int httpPortToUse = this.httpPort == 0 ? findAvailableTcpPort() : this.httpPort;
         int tcpPortToUse = this.tcpPort == 0 ? findAvailableTcpPort() : this.tcpPort;
+
+        this.elasticsearchRestClient = new ElasticsearchRestClient(httpPortToUse, this.indices);
 
         EmbeddedElastic.Builder embeddedElasticBuilder = EmbeddedElastic.builder()
             .withElasticVersion(this.version)
@@ -91,7 +95,7 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
             embeddedElasticBuilder.withPlugin(index);
         }
 
-        embeddedElastic = embeddedElasticBuilder.build().start();
+        this.embeddedElastic = embeddedElasticBuilder.build().start();
 
         System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_HTTP_PORT, Integer.toString(httpPortToUse));
         System.setProperty(SPRING_EMBEDDED_ELASTICSEARCH_TCP_PORT, Integer.toString(tcpPortToUse));
@@ -103,6 +107,16 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
 
     public int getTcpPort() {
         return embeddedElastic.getTransportTcpPort();
+    }
+
+    public void clearIndices() {
+        elasticsearchRestClient.clearIndices();
+        embeddedElastic.refreshIndices();
+    }
+
+    public void clearIndex(String indexName) {
+        elasticsearchRestClient.clearIndex(indexName);
+        embeddedElastic.refreshIndices();
     }
 
     public void recreateIndices() {
