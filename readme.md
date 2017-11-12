@@ -15,7 +15,7 @@ do not expose all configuration possibilities if you need more control over crea
   <dependency>
     <groupId>com.github.ajurasz</groupId>
     <artifactId>embedded-es-annotation</artifactId>
-    <version>0.2</version>
+    <version>0.1</version>
     <scope>test</test>
   </dependency>
 </dependencies>
@@ -26,20 +26,20 @@ or is case you need latest code use `jitpack`
 ```
 <project>
     <dependencies>
-		<dependency>
-			<groupId>com.github.ajurasz</groupId>
-			<artifactId>embedded-es-annotation</artifactId>
-			<version>746f8f12a01ae5e35b91a498fe9dafe241a5d213</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.github.ajurasz</groupId>
+            <artifactId>embedded-es-annotation</artifactId>
+            <version>746f8f12a01ae5e35b91a498fe9dafe241a5d213</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>
 ```
 
