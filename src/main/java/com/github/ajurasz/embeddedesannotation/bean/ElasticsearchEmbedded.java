@@ -9,6 +9,7 @@ import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic;
 
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.util.SocketUtils.findAvailableTcpPort;
@@ -141,5 +142,10 @@ public class ElasticsearchEmbedded implements InitializingBean, DisposableBean {
 
     public void index(String indexName, String indexType, String... json) {
         embeddedElastic.index(indexName, indexType, json);
+    }
+
+    public void index(String indexName, String indexType,
+                      Map<CharSequence, CharSequence> idJsonMap) {
+        embeddedElastic.index(indexName, indexType, idJsonMap);
     }
 }
