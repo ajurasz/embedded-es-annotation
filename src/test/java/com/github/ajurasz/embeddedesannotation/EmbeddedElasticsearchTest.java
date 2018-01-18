@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @EmbeddedElasticsearch(
-    indices = { "foo", "bar" }
+    indices = { "foo", "foo_2", "bar", "bar_2" }
 )
 public class EmbeddedElasticsearchTest {
 
@@ -66,16 +66,16 @@ public class EmbeddedElasticsearchTest {
     @Test
     public void should_delete_all_existing_documents() throws UnknownHostException {
         elasticsearchEmbedded.index("foo", "foo_type", "{\"value\": \"test\"}");
-        elasticsearchEmbedded.index("foo", "foo_type_2", "{\"value\": \"test\"}");
+        elasticsearchEmbedded.index("foo_2", "foo_type", "{\"value\": \"test\"}");
         elasticsearchEmbedded.index("bar", "bar_type", "{\"value\": \"test\"}");
-        elasticsearchEmbedded.index("bar", "bar_type_2", "{\"value\": \"test\"}");
+        elasticsearchEmbedded.index("bar_2", "bar_type", "{\"value\": \"test\"}");
 
-        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(4);
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "foo_2", "bar", "bar_2")).hasSize(4);
 
         elasticsearchEmbedded.clearIndex("foo");
-        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(2);
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "foo_2", "bar", "bar_2")).hasSize(3);
 
         elasticsearchEmbedded.clearIndices();
-        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "bar")).hasSize(0);
+        assertThat(elasticsearchEmbedded.fetchAllDocuments("foo", "foo_2", "bar", "bar_2")).hasSize(0);
     }
 }

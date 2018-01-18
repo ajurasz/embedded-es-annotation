@@ -16,7 +16,7 @@ public @interface EmbeddedElasticsearch {
     /**
      * @return elasticsearch version
      */
-    String version() default "5.5.3";
+    String version() default "6.0.1";
 
     /**
      * @return cluster name

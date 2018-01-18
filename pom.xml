@@ -20,7 +20,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <assertj.version>3.8.0</assertj.version>
-        <embedded-elasticsearch.version>2.1.0</embedded-elasticsearch.version>
+        <embedded-elasticsearch.version>2.4.3</embedded-elasticsearch.version>
         <fluent-hc.version>4.5.3</fluent-hc.version>
         <jest.version>5.3.3</jest.version>
         <junit.version>4.12</junit.version>
